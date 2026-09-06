@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TableTennisMind — Beat Stress, Sharpen Focus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue: #1D4ED8;
+    --blue-dark: #14329c;
+    --mint: #10B981;
+    --mint-dark: #0b8f68;
+    --gray: #F3F4F6;
+    --navy: #1E293B;
+    --navy-soft: #52606D;
+    --line: #E2E8F0;
+    --danger: #DC2626;
+    --danger-bg: #FEF2F2;
+    --success-bg: #ECFDF5;
+    --radius: 12px;
+    --shadow: 0 10px 30px rgba(29,78,216,0.10);
+    --maxw: 1140px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Open Sans', sans-serif; color:var(--navy);
+    background:#fff; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Montserrat', sans-serif; color:var(--navy); line-height:1.2; margin:0 0 .5em;}
+  p{margin:0 0 1em;}
+  a{color:var(--blue);}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  section{padding:88px 0;}
+  .alt{background:var(--gray);}
+  .kicker{
+    font-family:'Montserrat',sans-serif; font-weight:700; color:var(--mint-dark);
+    font-size:.92rem; margin-bottom:.4em; display:flex; align-items:center; gap:10px;
+  }
+  .kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--mint); flex:none;}
+  .lead{font-size:1.08rem; color:var(--navy-soft); max-width:660px;}
+  .head-block{max-width:720px; margin-bottom:44px;}
+  :focus-visible{outline:3px solid var(--mint); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important; scroll-behavior:auto !important;}}
+ 
+  .net-divider{
+    height:14px;
+    background-image:
+      radial-gradient(circle at center, var(--mint) 3px, transparent 3.5px),
+      linear-gradient(to right, var(--line) 1px, transparent 1px);
+    background-size:34px 14px, 34px 14px;
+    background-position:17px 50%, 0 50%;
+    background-repeat:repeat-x;
+  }
+ 
+  /* NAV */
+  header.nav{
+    position:sticky; top:0; z-index:100; background:rgba(255,255,255,.96);
+    backdrop-filter:saturate(180%) blur(6px); border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:var(--maxw); margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Montserrat',sans-serif; font-weight:800; color:var(--blue); font-size:1.12rem; text-decoration:none; white-space:nowrap;}
+  .brand .ball{width:16px;height:16px;border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, var(--mint) 45%, var(--mint-dark) 100%); flex:none;}
+  nav.links{display:flex; gap:2px; flex-wrap:wrap;}
+  nav.links a{font-family:'Montserrat',sans-serif; font-weight:600; font-size:.83rem; text-decoration:none; color:var(--navy); padding:8px 11px; border-radius:8px; transition:background .15s ease, color .15s ease;}
+  nav.links a:hover{background:var(--gray); color:var(--blue);}
+  .menu-btn{display:none; background:none; border:2px solid var(--blue); border-radius:8px; padding:8px 10px; cursor:pointer;}
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after{display:block; width:20px; height:2px; background:var(--blue); position:relative; content:'';}
+  .menu-btn span::before{position:absolute; top:-6px;}
+  .menu-btn span::after{position:absolute; top:6px;}
+  @media (max-width:920px){
+    nav.links{display:none; position:absolute; top:100%; left:0; right:0; background:#fff; border-bottom:1px solid var(--line); flex-direction:column; padding:8px 16px 16px; box-shadow:var(--shadow);}
+    nav.links.open{display:flex;}
+    .menu-btn{display:block;}
+  }
+ 
+  /* HERO */
+  .hero{
+    position:relative; color:#fff; padding:76px 0 120px; overflow:hidden;
+    background:linear-gradient(150deg, var(--blue) 0%, var(--blue-dark) 62%);
+    clip-path:polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .hero .wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;}
+  .hero h1{color:#fff; font-size:clamp(2rem,4vw,2.85rem); font-weight:800; letter-spacing:-.01em;}
+  .hero .lead{color:#DCE8FA; font-size:1.14rem; max-width:none;}
+  .hero .kicker{color:#8FE9C9;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:22px;}
+  .btn{font-family:'Montserrat',sans-serif; font-weight:700; font-size:.94rem; padding:14px 26px; border-radius:999px; border:2px solid transparent; cursor:pointer; text-decoration:none; display:inline-block; transition:transform .15s ease, background .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--mint); color:#052e21;}
+  .btn-primary:hover{background:#0fd79a;}
+  .btn-secondary{border-color:rgba(255,255,255,.55); color:#fff;}
+  .btn-secondary:hover{border-color:#fff; background:rgba(255,255,255,.08);}
+  .ball-visual{position:relative; aspect-ratio:1/1; max-width:300px; margin:0 auto;}
+  .ball-visual .table{position:absolute; left:0; right:0; bottom:8%; height:38%; background:linear-gradient(180deg, var(--mint) 0%, var(--mint-dark) 100%); border-radius:16px; box-shadow:inset 0 3px 0 rgba(255,255,255,.35);}
+  .ball-visual .table::after{content:''; position:absolute; top:0; left:50%; width:2px; height:100%; background:rgba(255,255,255,.7); transform:translateX(-50%);}
+  .ball-visual .ball{position:absolute; width:32px; height:32px; border-radius:50%; background:radial-gradient(circle at 32% 28%, #fff, #f5f5f5 40%, #cfd6e4 100%); left:50%; top:0; box-shadow:0 8px 16px rgba(0,0,0,.25); animation:bounce 1.6s cubic-bezier(.5,0,.5,1) infinite;}
+  @keyframes bounce{0%{transform:translate(-130px,10px);}50%{transform:translate(0,145px);}100%{transform:translate(130px,10px);}}
+  @media (prefers-reduced-motion: reduce){.ball-visual .ball{animation:none; left:calc(50% - 16px); top:56px;}}
+  @media (max-width:880px){.hero .wrap{grid-template-columns:1fr;} .ball-visual{order:-1; max-width:190px;}}
+ 
+  /* SCIENCE CARDS */
+  .cards-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .science-card{background:#fff; border:1px solid var(--line); border-top:4px solid var(--mint); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow); transition:transform .18s ease, box-shadow .18s ease;}
+  .science-card:hover{transform:translateY(-4px); box-shadow:0 16px 34px rgba(29,78,216,0.14);}
+  .science-card .tag{font-family:'Montserrat',sans-serif; font-weight:700; font-size:.72rem; letter-spacing:.02em; color:var(--mint-dark); margin-bottom:8px; display:block;}
+  .science-card h3{font-size:1.08rem; margin-bottom:10px;}
+  .science-card p{color:var(--navy-soft); font-size:.93rem;}
+  .stat-line{font-family:'Montserrat',sans-serif; font-weight:800; color:var(--blue); font-size:.95rem; display:block; margin:10px 0;}
+  .science-card .source{font-size:.8rem; color:var(--mint-dark); font-weight:600; display:inline-block; margin-top:6px;}
+  @media (max-width:920px){.cards-grid{grid-template-columns:1fr;}}
+ 
+  /* ROUTINE */
+  .steps-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .step-card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:24px; position:relative; border-left:4px solid var(--blue);}
+  .step-card .step-num{font-family:'Montserrat',sans-serif; font-weight:800; color:var(--blue); font-size:.8rem;}
+  .step-card h4{margin:8px 0; font-size:1.02rem;}
+  .step-card p{color:var(--navy-soft); font-size:.92rem; margin:0;}
+  @media (max-width:820px){.steps-grid{grid-template-columns:1fr;}}
+ 
+  /* TESTING */
+  .instructions-list{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:24px 28px; margin-bottom:28px;}
+  .instructions-list li{margin-bottom:10px; color:var(--navy-soft);}
+  table.score-table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin-bottom:36px;}
+  table.score-table th, table.score-table td{padding:13px 16px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  table.score-table thead th{background:var(--blue); color:#fff; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.82rem;}
+  table.score-table tbody tr:last-child td{border-bottom:none;}
+  table.score-table tbody tr:nth-child(even){background:#FAFBFC;}
+  .calc-widget{background:var(--blue-dark); border-radius:16px; padding:32px; color:#fff; display:flex; flex-wrap:wrap; gap:18px; align-items:center;}
+  .calc-widget label{font-family:'Montserrat',sans-serif; font-weight:700; font-size:.92rem;}
+  .calc-widget input[type="number"]{padding:11px 14px; border-radius:8px; border:none; font-size:1rem; width:120px; font-family:'Open Sans',sans-serif;}
+  #checkLevelBtn{background:var(--mint); color:#052e21; border:none; font-family:'Montserrat',sans-serif; font-weight:700; padding:12px 22px; border-radius:8px; cursor:pointer;}
+  #checkLevelBtn:hover{background:#0fd79a;}
+  #levelResult{font-family:'Montserrat',sans-serif; font-weight:800; padding:10px 16px; border-radius:8px; display:none;}
+  #levelResult.show{display:inline-block;}
+  #levelResult.basic{background:#7C2D12; color:#FFE4D6;}
+  #levelResult.good{background:#1E3A8A; color:#DCE8FA;}
+  #levelResult.excellent{background:var(--mint); color:#052e21;}
+ 
+  /* INTERVIEW ACCORDION */
+  .interview-intro{display:flex; align-items:center; gap:16px; margin-bottom:26px;}
+  .avatar{width:56px; height:56px; border-radius:50%; flex:none; background:radial-gradient(circle at 35% 30%, var(--mint), var(--mint-dark)); display:flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-weight:800; color:#052e21;}
+  .interview-intro h4{margin:0;}
+  .interview-intro p{margin:2px 0 0; color:var(--navy-soft); font-size:.9rem;}
+  .accordion{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#fff; margin-bottom:12px;}
+  .accordion-head{width:100%; text-align:left; background:none; border:none; cursor:pointer; padding:18px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; font-family:'Montserrat',sans-serif; font-weight:700; color:var(--blue); font-size:.98rem;}
+  .accordion-head .qnum{font-family:'Montserrat',sans-serif; font-weight:800; color:var(--mint-dark); font-size:.82rem; margin-right:10px;}
+  .accordion-icon{flex:none; width:24px; height:24px; border-radius:50%; border:2px solid var(--mint); position:relative; transition:transform .25s ease;}
+  .accordion-icon::before, .accordion-icon::after{content:''; position:absolute; background:var(--mint); left:50%; top:50%; transform:translate(-50%,-50%);}
+  .accordion-icon::before{width:11px; height:2px;}
+  .accordion-icon::after{width:2px; height:11px; transition:opacity .2s ease;}
+  .accordion.open .accordion-icon::after{opacity:0;}
+  .accordion.open .accordion-icon{transform:rotate(180deg);}
+  .accordion-body{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .accordion-body-inner{padding:0 22px 20px; color:var(--navy-soft); font-size:.94rem;}
+ 
+  /* QUIZ */
+  .quiz-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; box-shadow:var(--shadow);}
+  .quiz-question{margin-bottom:26px; padding-bottom:26px; border-bottom:1px solid var(--line);}
+  .quiz-question:last-of-type{border-bottom:none; margin-bottom:10px; padding-bottom:0;}
+  .quiz-question p.q-text{font-family:'Montserrat',sans-serif; font-weight:700; font-size:1rem; margin-bottom:14px;}
+  .quiz-options{display:grid; gap:10px;}
+  .quiz-opt{display:block; width:100%; text-align:left; padding:13px 16px; border:1.5px solid var(--line); border-radius:10px; cursor:pointer; font-size:.93rem; font-family:'Open Sans',sans-serif; background:#fff; transition:border-color .15s ease;}
+  .quiz-opt:hover{border-color:var(--blue);}
+  .quiz-opt.correct{border-color:var(--mint); background:var(--success-bg);}
+  .quiz-opt.incorrect{border-color:var(--danger); background:var(--danger-bg);}
+  .quiz-opt[disabled]{cursor:default;}
+  .feedback-box{margin-top:10px; padding:10px 14px; border-radius:8px; font-size:.87rem; font-weight:600; display:none;}
+  .feedback-box.show{display:block;}
+  .feedback-box.correct-fb{background:var(--success-bg); color:var(--mint-dark);}
+  .feedback-box.incorrect-fb{background:var(--danger-bg); color:var(--danger);}
+  #quizFinalScore{margin-top:8px; padding:20px; border-radius:12px; background:var(--gray); font-family:'Montserrat',sans-serif; font-weight:700; color:var(--blue); display:none;}
+  #quizFinalScore.show{display:block;}
+ 
+  /* ACTION PLAN */
+  .plan-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .plan-card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:26px; border-top:4px solid var(--blue);}
+  .plan-card h4{font-size:1.02rem; margin-bottom:10px;}
+  .plan-card p{color:var(--navy-soft); font-size:.92rem; margin:0;}
+  @media (max-width:920px){.plan-grid{grid-template-columns:1fr;}}
+ 
+  /* SOURCES */
+  .source-list{list-style:none; margin:0; padding:0; display:grid; gap:14px;}
+  .source-list li{padding:16px 20px; background:#fff; border:1px solid var(--line); border-left:4px solid var(--blue); border-radius:8px; font-size:.9rem; color:var(--navy-soft);}
+ 
+  footer{background:var(--blue-dark); color:#c9d9f6; padding:38px 0; text-align:center; font-size:.86rem;}
+  footer strong{color:#fff;}
+</style>
+</head>
+<body>
+ 
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="javascript:void(0)" data-target="home"><span class="ball" aria-hidden="true"></span>TableTennisMind</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu"><span></span></button>
+    <nav class="links" id="navLinks">
+      <a href="javascript:void(0)" data-target="home">Home</a>
+      <a href="javascript:void(0)" data-target="science">Science</a>
+      <a href="javascript:void(0)" data-target="routine">Routine</a>
+      <a href="javascript:void(0)" data-target="testing">Testing</a>
+      <a href="javascript:void(0)" data-target="interview">Interview</a>
+      <a href="javascript:void(0)" data-target="quiz">Quiz</a>
+      <a href="javascript:void(0)" data-target="action-plan">Action Plan</a>
+      <a href="javascript:void(0)" data-target="sources">Sources</a>
+    </nav>
+  </div>
+</header>
+ 
+<!-- HOME -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Personal Project · School Wellbeing</p>
+      <h1>Activate Your Mind &amp; Beat Stress with Table Tennis</h1>
+      <p class="lead">Disconnect from school overload, sharpen your reflexes, and boost your brain in minutes. A few minutes of ball tracking and quick footwork breaks the cycle of sitting still, scrolling, and cramming — and gives your prefrontal cortex exactly the kind of workout it needs to refocus for the rest of the day.</p>
+      <div class="cta-row">
+        <a href="javascript:void(0)" data-target="routine" class="btn btn-primary">Try the 10-Minute Routine</a>
+        <a href="javascript:void(0)" data-target="science" class="btn btn-secondary">See the Science</a>
+      </div>
+    </div>
+    <div class="ball-visual" aria-hidden="true">
+      <div class="table"></div>
+      <div class="ball"></div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- SCIENCE -->
+<section id="science">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Neurobiological &amp; Physical Evidence</p>
+      <h2>Why This Actually Works</h2>
+      <p class="lead">This isn't just "get up and move" advice — it's backed by measurable data on the brain and body.</p>
+    </div>
+ 
+    <div class="cards-grid">
+      <div class="science-card">
+        <span class="tag">MINDFULNESS &amp; ANXIETY</span>
+        <h3>A Measurable Drop in Stress</h3>
+        <p>In an 8-week structured table tennis program, participants showed a significant rise in mindfulness and psychological resilience, while a non-active control group's mindfulness actually declined over the same period.</p>
+        <span class="stat-line">t = 2.728, p = 0.011 (mindfulness) · t = 2.166, p = 0.039 (resilience)</span>
+        <p>Chasing a moving ball forces your prefrontal cortex — your brain's focus center — to fully engage with the present moment, which is linked to lower cortisol and less lingering mental fatigue after class.</p>
+        <span class="source">Çakır et al. (2025)</span>
+      </div>
+ 
+      <div class="science-card">
+        <span class="tag">OCULOMOTOR COORDINATION</span>
+        <h3>Your Eyes Train Your Hands</h3>
+        <p>Hand-eye coordination and sport-specific execution move almost in lockstep in young players — one of the strongest relationships researchers can measure in youth sport science.</p>
+        <span class="stat-line">r = 0.950, p &lt; 0.001</span>
+        <p>Separately, eye-hand coordination alone has been shown to explain a large share of how precisely adolescent players move.</p>
+        <span class="stat-line">68.2% influence on movement precision, p = 0.040</span>
+        <span class="source">Betancourt Calva et al. (2025); As et al. (2023)</span>
+      </div>
+ 
+      <div class="science-card">
+        <span class="tag">EXECUTIVE FUNCTION</span>
+        <h3>A Workout for Decision-Making</h3>
+        <p>Because every rally forces you to anticipate where the ball is heading and decide your next move in a split second, regular play appears to sharpen core executive skills: working memory, cognitive flexibility, and inhibitory control.</p>
+        <p>Related research also links consistent play with lower depression and anxiety scores among adolescents.</p>
+        <span class="source">González-Devesa et al. (2024); Zhang (2024)</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- ROUTINE -->
+<section id="routine" class="alt">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>8–10 Minute Active Break</p>
+      <h2>Your Routine, Step by Step</h2>
+      <p class="lead">No gym, no full table required — a paddle, a ball, and a smooth wall are enough.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-num">STEP 1 · 2 MIN</span>
+        <h4>Joint Warm-Up</h4>
+        <p>Active mobility circles for your wrists and forearms to prevent stiffness and reduce the risk of tendonitis before you start moving fast.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">STEP 2 · 3 MIN</span>
+        <h4>Control &amp; Bouncing</h4>
+        <p>Bounce the ball on your paddle, alternating the forehand and backhand faces while standing or walking slowly. Focus on control, not speed.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">STEP 3 · 3 MIN</span>
+        <h4>Wall Rebounds</h4>
+        <p>Rebound the ball off a smooth wall at close range to sharpen your reaction speed and visual tracking — the same skills you use to react fast in class.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- TESTING -->
+<section id="testing">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Measure Your Progress</p>
+      <h2>Hand Wall Toss Test</h2>
+      <p class="lead">A simple, quantitative way to track your hand-eye coordination before and after using the routine.</p>
+    </div>
+ 
+    <ul class="instructions-list">
+      <li><strong>1.</strong> Stand 2 meters from a smooth wall.</li>
+      <li><strong>2.</strong> Toss a table tennis or rubber ball underhand with one hand.</li>
+      <li><strong>3.</strong> Catch it with the opposite hand.</li>
+      <li><strong>4.</strong> Keep alternating hands continuously for 30 seconds, counting every clean catch.</li>
+    </ul>
+ 
+    <table class="score-table">
+      <thead><tr><th>Catches in 30 seconds</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr><td>Fewer than 15</td><td>Basic</td></tr>
+        <tr><td>15 – 25</td><td>Good</td></tr>
+        <tr><td>More than 25</td><td>Excellent</td></tr>
+      </tbody>
+    </table>
+ 
+    <div class="calc-widget">
+      <label for="scoreInput">Your catches in 30 seconds:</label>
+      <input type="number" id="scoreInput" min="0" max="200" placeholder="e.g. 18">
+      <button id="checkLevelBtn">Check Level</button>
+      <span id="levelResult"></span>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- INTERVIEW -->
+<section id="interview" class="alt">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Expert Insight</p>
+      <h2>Interview: Alan Blas</h2>
+      <p class="lead">Ten key takeaways from a personal-communication interview with Alan Blas, a physical trainer and biomechanics specialist, on table tennis and school health (2026).</p>
+    </div>
+ 
+    <div class="interview-intro">
+      <div class="avatar" aria-hidden="true">AB</div>
+      <div>
+        <h4>Alan Blas</h4>
+        <p>Physical Trainer &amp; Biomechanics Specialist</p>
+      </div>
+    </div>
+ 
+    <div id="interviewAccordion">
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">01</span>What happens to the body after hours at a desk?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Prolonged desk posture builds up motor fatigue and tension in the neck and wrists, and that tension quietly slows down reaction time without students noticing it happening.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">02</span>How does tracking a fast ball change fine motor control?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Repeatedly tracking a fast-moving ball trains the nervous system to fire faster, more precise signals to the hand — a neuromuscular adaptation that carries over into everyday fine motor tasks like handwriting or typing.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">03</span>Why call it a "neurobiological reset"?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Because the game demands 100% focus, it forces the brain to fully disengage from whatever was stressing it seconds earlier — releasing dopamine and lowering cortisol in the process, like flipping a mental reset switch.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">04</span>Is this routine realistic for a school day?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Completely. An 8–10 minute break needs no gym, no changing rooms, and no special equipment beyond a paddle, a ball, and a wall — it fits inside a normal recess.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">05</span>How do you actually measure progress?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">The Hand Wall Toss Test gives a simple, quantitative metric — a number of clean catches — that a student can retest every few weeks to see real, objective improvement.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">06</span>What's the biomechanical role of the wrist here?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">The wrist works as a fluid stabilizer rather than a rigid joint — staying loose lets it absorb small errors in timing instead of transmitting stiffness up the arm.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">07</span>Is it accessible for every student?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Yes — it's low-cost, involves zero physical collision between players, and doesn't require an athletic background, which makes it one of the most inclusive options a school can offer.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">08</span>What frequency would you recommend?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Ten to fifteen minutes, three to four times a week, is enough to build the habit without cutting meaningfully into study or class time.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">09</span>Does gamifying it help engagement?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Definitely. Visual score tracking and short video demos keep teenagers engaged far longer than a plain instruction sheet ever could.</div></div>
+      </div>
+      <div class="accordion" data-accordion>
+        <button class="accordion-head" aria-expanded="false"><span><span class="qnum">10</span>What's the bigger takeaway for schools?</span><span class="accordion-icon" aria-hidden="true"></span></button>
+        <div class="accordion-body"><div class="accordion-body-inner">Connecting a racket sport this accessible with measurable cognitive health benefits is a genuine game-changer for how schools think about short breaks during the day.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Interactive Check</p>
+      <h2>Test What You've Learned</h2>
+      <p class="lead">Pick an answer for each question — you'll get instant feedback.</p>
+    </div>
+ 
+    <div class="quiz-card">
+      <div class="quiz-question" data-correct="Prefrontal cortex">
+        <p class="q-text">1. Which brain area is engaged during table tennis to improve focus?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-value="Prefrontal cortex">Prefrontal cortex</button>
+          <button class="quiz-opt" data-value="Cerebellum">Cerebellum</button>
+          <button class="quiz-opt" data-value="Occipital lobe">Occipital lobe</button>
+        </div>
+        <div class="feedback-box"></div>
+      </div>
+ 
+      <div class="quiz-question" data-correct="r = 0.950">
+        <p class="q-text">2. According to Betancourt Calva et al. (2025), what is the correlation (r) between table tennis and hand-eye coordination?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-value="r = 0.950">r = 0.950</button>
+          <button class="quiz-opt" data-value="r = 0.500">r = 0.500</button>
+          <button class="quiz-opt" data-value="r = 0.220">r = 0.220</button>
+        </div>
+        <div class="feedback-box"></div>
+      </div>
+ 
+      <div class="quiz-question" data-correct="10-15 min, 3-4 times/week">
+        <p class="q-text">3. What is the ideal frequency for school active breaks recommended by specialist Alan Blas?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-value="10-15 min, 3-4 times/week">10–15 min, 3–4 times/week</button>
+          <button class="quiz-opt" data-value="2 hours once/week">2 hours, once a week</button>
+          <button class="quiz-opt" data-value="1 minute daily">1 minute daily</button>
+        </div>
+        <div class="feedback-box"></div>
+      </div>
+ 
+      <div id="quizFinalScore"></div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- ACTION PLAN -->
+<section id="action-plan" class="alt">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>School Implementation</p>
+      <h2>Bringing This Into the Classroom</h2>
+      <p class="lead">A low-cost, low-friction plan any school can adopt.</p>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <h4>Frequency</h4>
+        <p>10–15 minute blocks during recess or scheduled active breaks, ideally before intense study sessions or after long theory-heavy classes.</p>
+      </div>
+      <div class="plan-card">
+        <h4>Equipment</h4>
+        <p>Following Sport-Transfer (2022) guidelines: minimal space and low-cost gear — basic paddles and balls, with a standard table or any smooth wall as a substitute.</p>
+      </div>
+      <div class="plan-card">
+        <h4>Spaces</h4>
+        <p>Classrooms, clear hallways, or courtyards all work — no dedicated sports facility is required to get started.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="net-divider" aria-hidden="true"></div>
+ 
+<!-- SOURCES -->
+<section id="sources">
+  <div class="wrap">
+    <div class="head-block">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>References</p>
+      <h2>Sources</h2>
+      <p class="lead">Full bibliography in APA 7th format.</p>
+    </div>
+    <ul class="source-list">
+      <li>As, J., Widiastuti, Wasan, A., Sutriawan, A., &amp; Setyawan, M. N. (2023). The influence of eye-hand coordination and wrist fitness on the forehand smash ability of 13–17-years table tennis athletes. <em>Advances in Health Sciences Research</em>, 127–132.</li>
+      <li>Betancourt Calva, Y. M., Ochoa Granda, E. G., &amp; Salinas Quiñónez, M. A. (2025). El tenis de mesa y la coordinación óculo manual en los deportistas infantiles 11-13 años de FDPL. <em>Ciencia y Educación, 6</em>(9.1), 48–58.</li>
+      <li>Blas, A. (2026). <em>Interview on physical conditioning, biomechanics, and table tennis in school health</em> [Personal communication].</li>
+      <li>Çakır, G., Erol, T., &amp; Kırcı, D. (2025). The effect of table tennis exercises on mindfulness and psychological resilience of children and adolescents. <em>Cyprus Turkish Journal of Psychiatry &amp; Psychology</em>.</li>
+      <li>González-Devesa, D., Sanchez-Lastra, M. A., Pintos-Barreiro, M., &amp; Ayán-Pérez, C. (2024). Benefits of table tennis for children and adolescents: A narrative review. <em>Children, 11</em>(8), 963.</li>
+      <li>Sport-Transfer. (2022). <em>Table tennis - the best entertainment sport for children and young people?</em></li>
+      <li>Zhang, Z. (2024). The impact of table tennis on the physical and mental development of adolescents. <em>International Journal of Social Science and Education Research, 7</em>(8), 201–204.</li>
+    </ul>
+  </div>
+</section>
+ 
+<footer>
+  <div class="wrap">
+    <p><strong>TableTennisMind</strong> — Educational Personal Project</p>
+    <p>For educational purposes. Always consult a health professional before starting a new physical routine.</p>
+  </div>
+</footer>
+ 
+<script>
+(function(){
+  "use strict";
+ 
+  /* Mobile menu */
+  var menuBtn = document.getElementById('menuBtn');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    });
+  });
+ 
+  /* In-page smooth scroll: handled entirely in JS, no href="#id" navigation.
+     This avoids the browser treating the anchor jump as a page navigation. */
+  document.querySelectorAll('[data-target]').forEach(function(el){
+    el.addEventListener('click', function(evt){
+      evt.preventDefault();
+      var target = document.getElementById(el.getAttribute('data-target'));
+      if (target){
+        target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    });
+  });
+ 
+  /* Interview accordion */
+  document.querySelectorAll('[data-accordion]').forEach(function(item){
+    var head = item.querySelector('.accordion-head');
+    var body = item.querySelector('.accordion-body');
+    head.addEventListener('click', function(){
+      var open = item.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      body.style.maxHeight = open ? (body.scrollHeight + 'px') : null;
+    });
+  });
+ 
+  /* Hand Wall Toss Test calculator */
+  var checkLevelBtn = document.getElementById('checkLevelBtn');
+  var scoreInput = document.getElementById('scoreInput');
+  var levelResult = document.getElementById('levelResult');
+ 
+  checkLevelBtn.addEventListener('click', function(){
+    var score = parseInt(scoreInput.value, 10);
+    levelResult.classList.remove('basic','good','excellent');
+    if (isNaN(score) || score < 0){
+      levelResult.textContent = 'Enter a valid number of catches.';
+      levelResult.classList.add('basic');
+    } else if (score < 15){
+      levelResult.textContent = 'Basic — keep practicing the wall rebound drill daily.';
+      levelResult.classList.add('basic');
+    } else if (score <= 25){
+      levelResult.textContent = 'Good — solid coordination, push for Excellent next time.';
+      levelResult.classList.add('good');
+    } else {
+      levelResult.textContent = 'Excellent — outstanding hand-eye coordination!';
+      levelResult.classList.add('excellent');
+    }
+    levelResult.classList.add('show');
+  });
+ 
+  /* Quiz with instant feedback */
+  document.querySelectorAll('.quiz-question').forEach(function(question){
+    var correctValue = question.getAttribute('data-correct');
+    var options = question.querySelectorAll('.quiz-opt');
+    var feedback = question.querySelector('.feedback-box');
+ 
+    options.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        if (question.dataset.answered === 'true') return;
+        question.dataset.answered = 'true';
+ 
+        var chosen = opt.getAttribute('data-value');
+        options.forEach(function(o){
+          o.disabled = true;
+          if (o.getAttribute('data-value') === correctValue){
+            o.classList.add('correct');
+          } else if (o === opt){
+            o.classList.add('incorrect');
+          }
+        });
+ 
+        feedback.classList.add('show');
+        if (chosen === correctValue){
+          feedback.textContent = 'Correct! Well done.';
+          feedback.classList.add('correct-fb');
+        } else {
+          feedback.textContent = 'Not quite — the correct answer is highlighted in green.';
+          feedback.classList.add('incorrect-fb');
+        }
+ 
+        checkQuizComplete();
+      });
+    });
+  });
+ 
+  function checkQuizComplete(){
+    var questions = document.querySelectorAll('.quiz-question');
+    var answered = document.querySelectorAll('.quiz-question[data-answered="true"]');
+    if (answered.length !== questions.length) return;
+ 
+    var score = 0;
+    questions.forEach(function(q){
+      var correctValue = q.getAttribute('data-correct');
+      var chosenBtn = q.querySelector('.quiz-opt.incorrect');
+      var wasCorrect = !chosenBtn;
+      if (wasCorrect) score++;
+    });
+ 
+    var finalBox = document.getElementById('quizFinalScore');
+    finalBox.textContent = 'Your score: ' + score + ' / ' + questions.length;
+    finalBox.classList.add('show');
+  }
+ 
+})();
+</script>
+</body>
+</html>
